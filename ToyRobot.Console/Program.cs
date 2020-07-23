@@ -16,9 +16,12 @@
  * from DesignStreaks.
  */
 
-namespace ToyRobot
+namespace ToyRobot.Console
 {
     using System;
+    using Library;
+    using Library.Entities;
+    using Library.Parsers;
 
     public class Program
     {
@@ -30,35 +33,14 @@ namespace ToyRobot
                 Environment = new Table()
             };
 
-            IProcessor processor = new Processor();
+            var processor = new Processor();
 
-            Bearing bearing = new Bearing(0, 0, Orientation.North);
+            var fileParser = new FileParser();
+            var commands = fileParser.Parse("CommandFile.txt");
 
-            Status<Scene> status;
+            var newScene = processor.ProcessCommands(scene, commands);
 
-            status = processor.Place(scene, bearing);
-            if (status)
-                scene = status.Data;
-
-            status = processor.Move(scene);
-            if (status)
-                scene = status.Data;
-
-            status = processor.Turn(scene, "Right");
-            if (status)
-                scene = status.Data;
-
-            status = processor.Move(scene);
-            if (status)
-                scene = status.Data;
-
-            status = processor.Turn(scene, "Right");
-            if (status)
-                scene = status.Data;
-
-            status = processor.Report(scene);
-            if (status)
-                Console.WriteLine($"{status.Data.Bearing.Position.X}, {status.Data.Bearing.Position.Y} - {status.Data.Bearing.Orientation}");
+            Console.WriteLine($"{newScene.Robot.Bearing.Position.X}, {newScene.Robot.Bearing.Position.Y} - {newScene.Robot.Bearing.Orientation}");
 
             Console.ReadLine();
         }

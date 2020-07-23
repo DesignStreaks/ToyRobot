@@ -1,4 +1,5 @@
-﻿// * DESIGNSTREAKS CONFIDENTIAL
+﻿// *
+// * DESIGNSTREAKS CONFIDENTIAL
 // * __________________
 // *
 // *  Copyright © Design Streaks - 2010 - 2020
@@ -14,16 +15,20 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+
+namespace ToyRobot.Library.Entities
 {
-    using System;
+using System;
 
-    public interface IEnvironment
+    public struct Position
     {
-        /// <summary>The maximum height of the environment in whole units.</summary>
-        int Height { get; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
-        /// <summary>The maximum width of the environment in whole units.</summary>
-        int Width { get; }
+        public Position(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
     }
 }

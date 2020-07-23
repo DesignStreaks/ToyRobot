@@ -1,5 +1,4 @@
-﻿// *
-// * DESIGNSTREAKS CONFIDENTIAL
+﻿// * DESIGNSTREAKS CONFIDENTIAL
 // * __________________
 // *
 // *  Copyright © Design Streaks - 2010 - 2020
@@ -15,34 +14,16 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-using System;
-using ToyRobot.Library;
-using ToyRobot.Library.Entities;
-
-namespace ToyRobot.Console
+namespace ToyRobot.Library.Entities
 {
-    public class Robot : Actor
+    using System;
+
+    public interface IEnvironment
     {
-        public Robot(Guid id)
-        {
-            this.Id = id;
-        }
+        /// <summary>The maximum height of the environment in whole units.</summary>
+        int Height { get; }
 
-        public override void Place(Bearing bearing)
-        {
-            base.Bearing = bearing;
-        }
-
-        public override void Move()
-        {
-            base.Bearing = base.Bearing?.Move();
-        }
-
-        public override void Turn(Direction direction)
-        {
-            base.Bearing = base.Bearing?.Turn(direction);
-        }
-
-
+        /// <summary>The maximum width of the environment in whole units.</summary>
+        int Width { get; }
     }
 }

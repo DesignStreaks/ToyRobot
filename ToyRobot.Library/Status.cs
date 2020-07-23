@@ -13,9 +13,10 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+namespace ToyRobot.Library
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>Status class used to return the status of an operation.</summary>
     public class Status
@@ -38,11 +39,11 @@ namespace ToyRobot
             : this.message;
 
         /// <summary>Returns the state value of the <see cref="Status" /> .</summary>
-        /// <value>The state.</value>
         public States State { get; }
 
         /// <summary>Initializes a new instance of the <see cref="Status" /> class.</summary>
         /// <param name="state">The state.</param>
+        [DebuggerStepThrough]
         protected Status(States state)
         {
             this.State = state;
@@ -53,6 +54,7 @@ namespace ToyRobot
         ///   Initializes a new instance of the <see cref="Status" /> class, automatically setting the <see cref="State" /> property to <see cref="States.Error" />.
         /// </summary>
         /// <param name="message">The error message to attach to the <see cref="States.Error" /> state.</param>
+        [DebuggerStepThrough]
         protected Status(string message)
         {
             this.message = message;
@@ -62,6 +64,7 @@ namespace ToyRobot
         /// <summary>Creates a new <see cref="States.Error" /><see cref="Status" /> object with a custom <see cref="Message" />.</summary>
         /// <param name="message">The custom message to set for the <see cref="Status" />.</param>
         /// <returns>Returns an <see cref="States.Error" /><see cref="Status" /> object.</returns>
+        [DebuggerStepThrough]
         public static Status Error(string message) => new Status(message);
 
         /// <summary>
@@ -70,6 +73,7 @@ namespace ToyRobot
         /// </summary>
         /// <param name="status">The <see cref="Status" /> object to be converted.</param>
         /// <returns>The <c>true</c> if <see cref="State" /> is <see cref="States.Ok" />; <c>false</c> otherwise..</returns>
+        [DebuggerStepThrough]
         public static implicit operator bool(Status status) => status.State == States.Ok;
 
         /// <summary>
@@ -78,16 +82,18 @@ namespace ToyRobot
         /// </summary>
         /// <param name="status">The <see cref="Status" /> object to be converted.</param>
         /// <returns>The value of the <see cref="State" /> property..</returns>
+        [DebuggerStepThrough]
         public static implicit operator States(Status status) => status.State;
 
         /// <summary>Creates a new <see cref="States.Ok" /><see cref="Status" /> object.</summary>
         /// <returns>Returns an <see cref="States.Ok" /><see cref="Status" /> object.</returns>
+        [DebuggerStepThrough]
         public static Status Ok() => new Status(States.Ok);
     }
 
     /// <summary>Status class containing a data payload used to return the status of an operation.</summary>
     /// <typeparam name="T">The data type of the data payload.</typeparam>
-    /// <seealso cref="ToyRobot.Status" />
+    /// <seealso cref="ToyRobot.Library.Status" />
     public class Status<T> : Status
     {
         /// <summary>The data payload of the this <see cref="Status{T}" /> instance.</summary>
@@ -97,6 +103,7 @@ namespace ToyRobot
         /// <summary>Initializes a new instance of the <see cref="Status" /> class.</summary>
         /// <param name="state">The <see cref="Status.State" /> value to set the <see cref="Status{T}" /> to.</param>
         /// <param name="data">The data payload of the <see cref="Status{T}" />.</param>
+        [DebuggerStepThrough]
         protected Status(States state, T data) : base(state)
         {
             this.Data = data;
@@ -107,6 +114,7 @@ namespace ToyRobot
         /// </summary>
         /// <param name="message">The error message to attach to the <see cref="Status.States.Error" /> state.</param>
         /// <param name="data">The data payload of the <see cref="Status{T}" />.</param>
+        [DebuggerStepThrough]
         protected Status(string message, T data) : base(message)
         {
             this.Data = data;
@@ -116,11 +124,13 @@ namespace ToyRobot
         /// <param name="message">The message.</param>
         /// <param name="data">The data payload of the <see cref="Status{T}" />.</param>
         /// <returns>Returns an <see cref="Status.States.Error" /><see cref="Status{T}" /> object.</returns>
+        [DebuggerStepThrough]
         public static Status<T> Error(string message, T data) => new Status<T>(message, data);
 
         /// <summary>Creates a new <see cref="Status.States.Ok" /><see cref="Status{T}" /> object.</summary>
         /// <param name="data">The data payload of the <see cref="Status{T}" />.</param>
         /// <returns>Returns an <see cref="Status.States.Ok" /><see cref="Status{T}" /> object.</returns>
+        [DebuggerStepThrough]
         public static Status<T> Ok(T data) => new Status<T>(States.Ok, data);
     }
 }

@@ -15,19 +15,21 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+namespace ToyRobot.Library.Commands
 {
     using System;
+    using Entities;
 
-    public struct Position
+    public class ReportCommand : Command<Scene>
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        public Position(int x, int y)
+        /// <summary>Executes the command over the scene.</summary>
+        /// <param name="scene">The scene to execute the command on.</param>
+        /// <returns>The status of the command execution along with the updated scene.</returns>
+        public override Status<Scene> Execute(Scene scene)
         {
-            this.X = x;
-            this.Y = y;
+            var newScene = scene.Copy();
+
+            return Status<Scene>.Ok(newScene);
         }
     }
 }

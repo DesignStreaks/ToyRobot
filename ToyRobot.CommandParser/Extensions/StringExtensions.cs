@@ -15,31 +15,35 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot.Library
+using System.Diagnostics;
+
+namespace System
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Commands;
-    using Entities;
+    using System.Text;
+    using System.Threading.Tasks;
 
-    public class Processor : IProcessor
+
+    public static class StringExtensions
     {
-        /// <summary>Process each command sequentially on the scene.</summary>
-        /// <param name="scene">The scene to execute the commands on.</param>
-        /// <param name="commands">The list of commands to execute over the scene.</param>
-        /// <returns>The outcome of the scene after all commands have been executed.</returns>
-        public Scene ProcessCommands(Scene scene, List<ICommand<Scene>> commands)
+        [DebuggerHidden]
+        public static T ToEnum<T>(this string value) where T : struct, IConvertible
         {
-            var newScene = scene.Copy();
+            if (!typeof(T).IsEnum)
+                throw new ArgumentException("T must be an Enumerable Type");
 
-            foreach (var status in commands.Select(command => command.Execute(newScene)))
-            {
-                if (status)
-                    newScene = status.Data;
-            }
+            T a = default(T);
 
-            return newScene;
+            if (string.IsNullOrEmpty(value))
+                throw new NullReferenceException("Value is null or empty.");
+
+            if (!Enum.TryParse<T>(value, true, out a))
+                throw new ArgumentException($"Enum type '{typeof(T).Name}' does ot contain the requested value `{value}'.");
+
+            return a;
         }
+
     }
 }

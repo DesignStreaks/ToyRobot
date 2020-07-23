@@ -15,15 +15,15 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+namespace ToyRobot.Library.Commands
 {
     using System;
 
-    public enum Orientation
+    public abstract class Command<T> : ICommand<T>
     {
-        North,
-        South,
-        East,
-        West
+        /// <summary>Executes the command over the scene.</summary>
+        /// <param name="scene">The entity to execute the command on.</param>
+        /// <returns>The status of the command execution along with the updated entity.</returns>
+        public abstract Status<T> Execute(T scene);
     }
 }

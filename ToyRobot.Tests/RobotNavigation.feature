@@ -8,17 +8,17 @@ Scenario Outline: Add Robot to Table
 	And the status will contain the message <message>
 
 	Examples:
-		| id | x   | y   | orientation | status  | message         |
-		| 1  | 0   | 0   | "North"     | "Ok"    | "Ok"            |
-		| 2  | 0   | 4   | "North"     | "Ok"    | "Ok"            |
-		| 3  | 4   | 0   | "North"     | "Ok"    | "Ok"            |
-		| 4  | 2   | 2   | "North"     | "Ok"    | "Ok"            |
-		| 5  | 4   | 4   | "North"     | "Ok"    | "Ok"            |
-		| 6  | 0   | 5   | "North"     | "Error" | "Out of Bounds" |
-		| 7  | 5   | 0   | "North"     | "Error" | "Out of Bounds" |
-		| 8  | -1  | 2   | "North"     | "Error" | "Out of Bounds" |
-		| 9  | 2   | -1  | "North"     | "Error" | "Out of Bounds" |
-		| 10 | -10 | -10 | "North"     | "Error" | "Out of Bounds" |
+		| id | x   | y   | orientation | status | message |
+		| 1  | 0   | 0   | "North"     | "Ok"   | "Ok"    |
+		| 2  | 0   | 4   | "North"     | "Ok"   | "Ok"    |
+		| 3  | 4   | 0   | "North"     | "Ok"   | "Ok"    |
+		| 4  | 2   | 2   | "North"     | "Ok"   | "Ok"    |
+		| 5  | 4   | 4   | "North"     | "Ok"   | "Ok"    |
+		| 6  | 0   | 5   | "North"     | "Ok"   | "Ok"    |
+		| 7  | 5   | 0   | "North"     | "Ok"   | "Ok"    |
+		| 8  | -1  | 2   | "North"     | "Ok"   | "Ok"    |
+		| 9  | 2   | -1  | "North"     | "Ok"   | "Ok"    |
+		| 10 | -10 | -10 | "North"     | "Ok"   | "Ok"    |
 
 Scenario Outline: ReAdd Robot to Table
 	Given the robot exists
@@ -43,31 +43,31 @@ Scenario Outline: Move Robot when on Table
 	And the status will contain the message <message>
 
 	Examples:
-		| id | x | y | orientation | status  | message         |
-		| 1a | 0 | 0 | "North"     | "Ok"    | "Ok"            |
-		| 1b | 0 | 0 | "South"     | "Error" | "Out of Bounds" |
-		| 1c | 0 | 0 | "East"      | "Ok"    | "Ok"            |
-		| 1d | 0 | 0 | "West"      | "Error" | "Out of Bounds" |
-		| 2a | 0 | 4 | "North"     | "Error" | "Out of Bounds" |
-		| 2b | 0 | 4 | "South"     | "Ok"    | "Ok"            |
-		| 2c | 0 | 4 | "East"      | "Ok"    | "Ok"            |
-		| 2d | 0 | 4 | "West"      | "Error" | "Out of Bounds" |
-		| 3a | 4 | 0 | "North"     | "Ok"    | "Ok"            |
-		| 3b | 4 | 0 | "South"     | "Error" | "Out of Bounds" |
-		| 3c | 4 | 0 | "East"      | "Error" | "Out of Bounds" |
-		| 3d | 4 | 0 | "West"      | "Ok"    | "Ok"            |
-		| 4a | 4 | 4 | "North"     | "Error" | "Out of Bounds" |
-		| 4b | 4 | 4 | "South"     | "Ok"    | "Ok"            |
-		| 4c | 4 | 4 | "East"      | "Error" | "Out of Bounds" |
-		| 4d | 4 | 4 | "West"      | "Ok"    | "Ok"            |
-		| 5a | 2 | 2 | "North"     | "Ok"    | "Ok"            |
-		| 5b | 2 | 2 | "South"     | "Ok"    | "Ok"            |
-		| 5c | 2 | 2 | "East"      | "Ok"    | "Ok"            |
-		| 5d | 2 | 2 | "West"      | "Ok"    | "Ok"            |
-		| 6a | 3 | 3 | "North"     | "Ok"    | "Ok"            |
-		| 6b | 3 | 3 | "South"     | "Ok"    | "Ok"            |
-		| 6c | 3 | 3 | "East"      | "Ok"    | "Ok"            |
-		| 6d | 3 | 3 | "West"      | "Ok"    | "Ok"            |
+		| id | x | y | orientation | status | message |
+		| 1a | 0 | 0 | "North"     | "Ok"   | "Ok"    |
+		| 1b | 0 | 0 | "South"     | "Ok"   | "Ok"    |
+		| 1c | 0 | 0 | "East"      | "Ok"   | "Ok"    |
+		| 1d | 0 | 0 | "West"      | "Ok"   | "Ok"    |
+		| 2a | 0 | 4 | "North"     | "Ok"   | "Ok"    |
+		| 2b | 0 | 4 | "South"     | "Ok"   | "Ok"    |
+		| 2c | 0 | 4 | "East"      | "Ok"   | "Ok"    |
+		| 2d | 0 | 4 | "West"      | "Ok"   | "Ok"    |
+		| 3a | 4 | 0 | "North"     | "Ok"   | "Ok"    |
+		| 3b | 4 | 0 | "South"     | "Ok"   | "Ok"    |
+		| 3c | 4 | 0 | "East"      | "Ok"   | "Ok"    |
+		| 3d | 4 | 0 | "West"      | "Ok"   | "Ok"    |
+		| 4a | 4 | 4 | "North"     | "Ok"   | "Ok"    |
+		| 4b | 4 | 4 | "South"     | "Ok"   | "Ok"    |
+		| 4c | 4 | 4 | "East"      | "Ok"   | "Ok"    |
+		| 4d | 4 | 4 | "West"      | "Ok"   | "Ok"    |
+		| 5a | 2 | 2 | "North"     | "Ok"   | "Ok"    |
+		| 5b | 2 | 2 | "South"     | "Ok"   | "Ok"    |
+		| 5c | 2 | 2 | "East"      | "Ok"   | "Ok"    |
+		| 5d | 2 | 2 | "West"      | "Ok"   | "Ok"    |
+		| 6a | 3 | 3 | "North"     | "Ok"   | "Ok"    |
+		| 6b | 3 | 3 | "South"     | "Ok"   | "Ok"    |
+		| 6c | 3 | 3 | "East"      | "Ok"   | "Ok"    |
+		| 6d | 3 | 3 | "West"      | "Ok"   | "Ok"    |
 
 Scenario Outline: Move Robot when not on Table
 	Given the robot exists
@@ -132,12 +132,12 @@ Scenario Outline: Report Robot Position after Invalid Move
 	And I Report the Robot Position
 	Then the Robot is on the Table at <x> and <y> facing <orientation>
 
-Examples: 
-		| id | x | y | orientation | status | message | 
-		| 1  | 0 | 4 | "North"     | "Ok"   | "Ok"    | 
-		| 2  | 0 | 0 | "South"     | "Ok"   | "Ok"    | 
-		| 3  | 4 | 0 | "East"      | "Ok"   | "Ok"    | 
-		| 4  | 0 | 0 | "West"      | "Ok"   | "Ok"    | 
+	Examples:
+		| id | x | y | orientation | status | message |
+		| 1  | 0 | 4 | "North"     | "Ok"   | "Ok"    |
+		| 2  | 0 | 0 | "South"     | "Ok"   | "Ok"    |
+		| 3  | 4 | 0 | "East"      | "Ok"   | "Ok"    |
+		| 4  | 0 | 0 | "West"      | "Ok"   | "Ok"    |
 
 Scenario Outline: Report Robot Position after Turn
 	Given the robot exists

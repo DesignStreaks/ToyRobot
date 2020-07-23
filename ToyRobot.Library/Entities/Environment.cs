@@ -15,7 +15,8 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+
+namespace ToyRobot.Library.Entities
 {
     using System;
 

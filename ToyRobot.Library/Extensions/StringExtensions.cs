@@ -15,16 +15,11 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-using System.Diagnostics;
-
+// ReSharper disable CheckNamespace
 namespace System
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
+    using System.Diagnostics;
 
     public static class StringExtensions
     {
@@ -44,6 +39,5 @@ namespace System
 
             return a;
         }
-
     }
 }

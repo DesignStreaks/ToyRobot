@@ -15,14 +15,13 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+namespace ToyRobot.Library.Entities
 {
     using System;
 
-    public struct Scene
+    public enum Direction
     {
-        public Bearing Bearing;
-        public Actor Robot;
-        public Environment Environment;
+        Left,
+        Right
     }
 }

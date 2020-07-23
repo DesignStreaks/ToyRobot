@@ -16,25 +16,42 @@
 // * from DesignStreaks.
 
 
-namespace ToyRobot
+namespace ToyRobot.Library.Entities
 {
-    using System;
+using System;
 
     public interface IActor
     {
         /// <summary>A unique identifier of the Actor.</summary>
         Guid Id { get; }
+
+        Bearing Bearing { get; }
+
+        void Place(Bearing bearing);
+        void Move();
+        void Turn(Direction direction);
+
     }
 
-    public class Actor : IActor
+    public abstract class Actor : IActor
     {
         /// <summary>A unique identifier of the Actor.</summary>
         public Guid Id { get; protected set; }
 
+        public Bearing Bearing { get; protected set; }
+
         /// <summary>Initializes a new instance of the <see cref="Actor"/> class.</summary>
-        public Actor()
+        protected Actor()
         {
             this.Id = Guid.Empty;
         }
+
+        public abstract void Place(Bearing bearing);
+        public abstract void Move();
+        public abstract void Turn(Direction direction);
+
+
     }
+
+        
 }

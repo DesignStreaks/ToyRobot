@@ -15,34 +15,16 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-using System;
-using ToyRobot.Library;
 using ToyRobot.Library.Entities;
 
-namespace ToyRobot.Console
+namespace ToyRobot.Library.Parsers
 {
-    public class Robot : Actor
+    using System;
+    using System.Collections.Generic;
+    using Commands;
+
+    public interface IFileParser
     {
-        public Robot(Guid id)
-        {
-            this.Id = id;
-        }
-
-        public override void Place(Bearing bearing)
-        {
-            base.Bearing = bearing;
-        }
-
-        public override void Move()
-        {
-            base.Bearing = base.Bearing?.Move();
-        }
-
-        public override void Turn(Direction direction)
-        {
-            base.Bearing = base.Bearing?.Turn(direction);
-        }
-
-
+        List<ICommand<Scene>> Parse(string fileName);
     }
 }

@@ -15,13 +15,17 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+namespace ToyRobot.Library.Commands
 {
     using System;
 
-    public enum Direction
+    /// <summary>Interface contract for all Command objects.</summary>
+    /// <typeparam name="T">The entity the command is to be executed on.</typeparam>
+    public interface ICommand<T>
     {
-        Left,
-        Right
+        /// <summary>Executes the command over the scene.</summary>
+        /// <param name="scene">The entity to execute the command on.</param>
+        /// <returns>The status of the command execution along with the updated entity.</returns>
+        Status<T> Execute(T scene);
     }
 }

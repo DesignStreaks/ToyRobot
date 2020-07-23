@@ -15,6 +15,11 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
+using ToyRobot.Console;
+using ToyRobot.Library;
+using ToyRobot.Library.Commands;
+using ToyRobot.Library.Entities;
+
 namespace ToyRobot.Tests
 {
     using System;
@@ -26,22 +31,22 @@ namespace ToyRobot.Tests
     {
         public RobotNavigationSteps()
         {
-            ScenarioContext.Current["scene"] = new ToyRobot.Scene();
+            ScenarioContext.Current["scene"] = new Scene();
             ScenarioContext.Current["processor"] = new Processor();
         }
 
         [Given(@"I have a table of height (.*) and width (.*)")]
         public void GivenIHaveATableOfHeightAndWidth(int height, int width)
         {
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
-            scene.Environment = new ToyRobot.Environment(height, width);
+            var scene = (Scene)ScenarioContext.Current["scene"];
+            scene.Environment = new Library.Entities.Environment(height, width);
             ScenarioContext.Current["scene"] = scene;
         }
 
         [Given(@"the robot exists")]
         public void GivenTheRobotExists()
         {
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
+            var scene = (Scene)ScenarioContext.Current["scene"];
             scene.Robot = new Robot(Guid.NewGuid());
             ScenarioContext.Current["scene"] = scene;
         }
@@ -49,31 +54,32 @@ namespace ToyRobot.Tests
         [Given(@"the robot is currently on the Table at (.*) and (.*) facing ""(.*)""")]
         public void GivenTheRobotIsCurrentlyOnTheTableAtAndFacing(int x, int y, string orientation)
         {
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
-            scene.Bearing = new Bearing(x, y, orientation.ToEnum<Orientation>());
-            ScenarioContext.Current["scene"] = scene;
+            var scene = (Scene)ScenarioContext.Current["scene"];
+
+            var status = new PlaceCommand(new Bearing(x, y, orientation.ToEnum<Orientation>())).Execute(scene);
+            ScenarioContext.Current["scene"] = status.Data;
         }
 
         [Then(@"the Robot is on the Table at (.*) and (.*) facing ""(.*)""")]
         public void ThenTheRobotIsOnTheTableAtAndFacing(int x, int y, string orientation)
         {
-            var status = (Status<ToyRobot.Scene>)ScenarioContext.Current["status"];
-            Assert.Equal(x, status.Data.Bearing?.Position.X);
-            Assert.Equal(y, status.Data.Bearing?.Position.Y);
-            Assert.Equal(orientation, status.Data.Bearing?.Orientation.ToString());
+            var status = (Status<Scene>)ScenarioContext.Current["status"];
+            Assert.Equal(x, status.Data.Robot.Bearing?.Position.X);
+            Assert.Equal(y, status.Data.Robot.Bearing?.Position.Y);
+            Assert.Equal(orientation, status.Data.Robot.Bearing?.Orientation.ToString());
         }
 
         [Then(@"the status will contain the message ""(.*)""")]
         public void ThenTheStatusWillContainTheMessage(string message)
         {
-            var status = (Status<ToyRobot.Scene>)ScenarioContext.Current["status"];
+            var status = (Status<Scene>)ScenarioContext.Current["status"];
             Assert.Equal(message, status.Message);
         }
 
         [Then(@"the value of the status will be ""(.*)""")]
         public void ThenTheValueOfTheStatusWillBe(string statusValue)
         {
-            var status = (Status<ToyRobot.Scene>)ScenarioContext.Current["status"];
+            var status = (Status<Scene>)ScenarioContext.Current["status"];
             Assert.Equal(statusValue.ToEnum<Status.States>(), status.State);
         }
 
@@ -104,10 +110,9 @@ namespace ToyRobot.Tests
         [When(@"I move the robot forward")]
         public void WhenIMoveTheRobotForward()
         {
-            var processor = (Processor)ScenarioContext.Current["processor"];
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
+            var scene = (Scene)ScenarioContext.Current["scene"];
 
-            var status = processor.Move(scene);
+            var status = new MoveCommand().Execute(scene);
 
             ScenarioContext.Current["status"] = status;
             ScenarioContext.Current["scene"] = status.Data;
@@ -116,10 +121,9 @@ namespace ToyRobot.Tests
         [When(@"I place the robot at (.*) and (.*) facing ""(.*)""")]
         public void WhenIPlaceTheRobotAtAndFacing(int x, int y, string orientation)
         {
-            var processor = (Processor)ScenarioContext.Current["processor"];
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
+            var scene = (Scene)ScenarioContext.Current["scene"];
 
-            var status = processor.Place(scene, new Bearing(x, y, orientation.ToEnum<Orientation>()));
+            var status = new PlaceCommand(new Bearing(x, y, orientation.ToEnum<Orientation>())).Execute(scene);
 
             ScenarioContext.Current["status"] = status;
             ScenarioContext.Current["scene"] = status.Data;
@@ -128,10 +132,9 @@ namespace ToyRobot.Tests
         [When(@"I readd the robot at (.*) and (.*) facing ""(.*)""")]
         public void WhenIReaddTheRobotAtAndFacing(int x, int y, string orientation)
         {
-            var processor = (Processor)ScenarioContext.Current["processor"];
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
+            var scene = (Scene)ScenarioContext.Current["scene"];
 
-            var status = processor.Place(scene, new Bearing(x, y, orientation.ToEnum<Orientation>()));
+            var status = new PlaceCommand(new Bearing(x, y, orientation.ToEnum<Orientation>())).Execute(scene);
 
             ScenarioContext.Current["status"] = status;
             ScenarioContext.Current["scene"] = status.Data;
@@ -140,21 +143,21 @@ namespace ToyRobot.Tests
         [When(@"I Report the Robot Position")]
         public void WhenIReportTheRobotPosition()
         {
-            var processor = (Processor)ScenarioContext.Current["processor"];
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
-
-            var status = processor.Report(scene);
+            var scene = (Scene)ScenarioContext.Current["scene"];
+            
+            var status = new ReportCommand().Execute(scene);
 
             ScenarioContext.Current["status"] = status;
+            ScenarioContext.Current["scene"] = status.Data;
         }
 
         [When(@"I turn the robot ""(.*)""")]
         public void WhenITurnTheRobot(string direction)
         {
-            var processor = (Processor)ScenarioContext.Current["processor"];
-            var scene = (ToyRobot.Scene)ScenarioContext.Current["scene"];
+            var scene = (Scene)ScenarioContext.Current["scene"];
 
-            var status = processor.Turn(scene, direction);
+
+            var status = new TurnCommand(direction.ToEnum<Direction>()).Execute(scene);
 
             ScenarioContext.Current["status"] = status;
             ScenarioContext.Current["scene"] = status.Data;

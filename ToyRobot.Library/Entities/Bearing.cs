@@ -15,9 +15,10 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
+namespace ToyRobot.Library.Entities
 {
     using System;
+    using ToyRobot.Library;
 
     public class Bearing
     {
@@ -30,7 +31,7 @@ namespace ToyRobot
             this.Orientation = orientation;
         }
 
-        internal Bearing Move()
+        public Bearing Move()
         {
             var newBearing = new Bearing(
                 this.Position.X,
@@ -59,7 +60,7 @@ namespace ToyRobot
             return newBearing;
         }
 
-        internal Bearing Turn(Direction direction)
+        public Bearing Turn(Direction direction)
         {
             var newBearing = new Bearing(
                 this.Position.X,
@@ -94,6 +95,13 @@ namespace ToyRobot
             }
 
             return newBearing;
+        }
+
+        /// <summary>Returns a string that represents the current object.</summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return $"{Position.X}, {Position.Y} @ {Orientation}";
         }
     }
 }

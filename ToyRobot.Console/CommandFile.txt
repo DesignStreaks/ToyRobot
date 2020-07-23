@@ -1,0 +1,6 @@
+﻿PLACE 0, 0, North
+MOVE
+RIGHT
+MOVE
+RIGHT
+REPORT

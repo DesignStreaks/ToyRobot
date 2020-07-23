@@ -15,13 +15,14 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot
-{
-    using System;
 
+using System;
+
+namespace ToyRobot.Console
+{
     /// <summary>A 5 x 5 unit square table.</summary>
-    /// <seealso cref="ToyRobot.Environment" />
-    public class Table : Environment
+    /// <seealso cref="Library.Entities.Environment" />
+    public class Table : Library.Entities.Environment
     {
         /// <summary>Initializes a new instance of the 5 x 5 unit square <see cref="Table"/> class.</summary>
         public Table() : base(5, 5) { }
