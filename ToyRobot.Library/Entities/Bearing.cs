@@ -18,19 +18,25 @@
 namespace ToyRobot.Library.Entities
 {
     using System;
-    using ToyRobot.Library;
 
+    /// <summary>Representation of a Position and Orientation</summary>
     public class Bearing
     {
         public Orientation Orientation { get; set; }
         public Position Position { get; set; }
 
+        /// <summary>Initializes a new instance of the <see cref="Bearing"/> class.</summary>
+        /// <param name="x">The x-coordinate.</param>
+        /// <param name="y">The y-coordinate.</param>
+        /// <param name="orientation">The orientation.</param>
         public Bearing(int x, int y, Orientation orientation)
         {
             this.Position = new Position(x, y);
             this.Orientation = orientation;
         }
 
+        /// <summary>Updates the position by 1 unit in the diretion of the orientation.</summary>
+        /// <returns>Bearing.</returns>
         public Bearing Move()
         {
             var newBearing = new Bearing(
@@ -60,6 +66,16 @@ namespace ToyRobot.Library.Entities
             return newBearing;
         }
 
+        /// <summary>Returns a string that represents the current object.</summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return $"{Position.X}, {Position.Y} @ {Orientation}";
+        }
+
+        /// <summary>Updates the orientation by 90° left or right.</summary>
+        /// <param name="direction">The direction to update the orientation.</param>
+        /// <returns>Bearing.</returns>
         public Bearing Turn(Direction direction)
         {
             var newBearing = new Bearing(
@@ -95,13 +111,6 @@ namespace ToyRobot.Library.Entities
             }
 
             return newBearing;
-        }
-
-        /// <summary>Returns a string that represents the current object.</summary>
-        /// <returns>A string that represents the current object.</returns>
-        public override string ToString()
-        {
-            return $"{Position.X}, {Position.Y} @ {Orientation}";
         }
     }
 }

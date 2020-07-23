@@ -19,23 +19,29 @@ namespace ToyRobot.Library.Entities
 {
     using System;
 
-    public interface IActor
+    public abstract class Actor : IActor
     {
-        /// <summary>The position and orientation of the Actor.</summary>
-        Bearing Bearing { get; }
+        /// <summary>Gets or sets the bearing.</summary>
+        public Bearing Bearing { get; protected set; }
 
         /// <summary>A unique identifier of the Actor.</summary>
-        Guid Id { get; }
+        public Guid Id { get; protected set; }
+
+        /// <summary>Initializes a new instance of the <see cref="Actor"/> class.</summary>
+        protected Actor()
+        {
+            this.Id = Guid.Empty;
+        }
 
         /// <summary>Moves the Actor.</summary>
-        void Move();
+        public abstract void Move();
 
         /// <summary>Updates the bearing of the Actor.</summary>
         /// <param name="bearing">The bearing.</param>
-        void Place(Bearing bearing);
+        public abstract void Place(Bearing bearing);
 
         /// <summary>Turns the Actor in the specified direction.</summary>
         /// <param name="direction">The direction.</param>
-        void Turn(Direction direction);
+        public abstract void Turn(Direction direction);
     }
 }

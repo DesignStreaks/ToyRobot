@@ -19,6 +19,7 @@ namespace ToyRobot.Library.Entities
 {
     using System;
 
+    /// <summary>The valid orientations the actor can be facing.</summary>
     public enum Orientation
     {
         North,

@@ -15,16 +15,18 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-using ToyRobot.Library.Entities;
-
 namespace ToyRobot.Library.Parsers
 {
     using System;
     using System.Collections.Generic;
     using Commands;
+    using Entities;
 
     public interface IFileParser
     {
+        /// <summary>Parses the specified file name into executable <see cref="ICommand{T}"/>'s.</summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>Returns a list of commands to be executed.</returns>
         List<ICommand<Scene>> Parse(string fileName);
     }
 }

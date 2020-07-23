@@ -20,6 +20,8 @@ namespace ToyRobot.Library.Commands
     using System;
     using Entities;
 
+    /// <summary>Command to report on an Actor in a scene.</summary>
+    /// <seealso cref="ToyRobot.Library.Commands.Command{Scene}" />
     public class ReportCommand : Command<Scene>
     {
         /// <summary>Executes the command over the scene.</summary>

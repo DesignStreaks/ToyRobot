@@ -18,6 +18,7 @@ namespace ToyRobot.Library.Entities
 {
     using System;
 
+    /// <summary>Representation of the scene landscape.</summary>
     public interface IEnvironment
     {
         /// <summary>The maximum height of the environment in whole units.</summary>

@@ -25,6 +25,9 @@ namespace ToyRobot.Library.Parsers
 
     public class FileParser : IFileParser
     {
+        /// <summary>Parses the specified file name into executable <see cref="ICommand{T}" />'s.</summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>Returns a list of commands to be executed.</returns>
         public List<ICommand<Scene>> Parse(string fileName)
         {
             var commands = new List<ICommand<Scene>>();
@@ -128,7 +131,7 @@ namespace ToyRobot.Library.Parsers
                 Status.Error("Place command invalid 'y' argument");
 
             Orientation orientation;
-            if (!Enum.TryParse<Orientation>(parts[3], out orientation))
+            if (!Enum.TryParse(parts[3], out orientation))
                 Status.Error("Place command invalid 'orientation' argument");
 
             bearing = new Bearing(x, y, orientation);

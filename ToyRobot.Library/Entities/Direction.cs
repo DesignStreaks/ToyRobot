@@ -19,6 +19,7 @@ namespace ToyRobot.Library.Entities
 {
     using System;
 
+    /// <summary>The valid directions the orientation can be updated with.</summary>
     public enum Direction
     {
         Left,

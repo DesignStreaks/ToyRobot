@@ -21,7 +21,7 @@ namespace ToyRobot.Library.Commands
     using Entities;
 
     /// <summary>Command to move an Actor in a scene 1 unit forward.</summary>
-    /// <seealso cref="ToyRobot.Library.Commands.SceneCommand" />
+    /// <seealso cref="ToyRobot.Library.Commands.Command{Scene}" />
     public class MoveCommand : Command<Scene>
     {
         /// <summary>Executes the command over the scene.</summary>

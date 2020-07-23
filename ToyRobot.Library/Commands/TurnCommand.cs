@@ -20,6 +20,8 @@ namespace ToyRobot.Library.Commands
     using System;
     using Entities;
 
+    /// <summary>Command to turn an Actor in a scene.</summary>
+    /// <seealso cref="ToyRobot.Library.Commands.Command{Scene}" />
     public class TurnCommand : Command<Scene>
     {
         private readonly Direction direction;

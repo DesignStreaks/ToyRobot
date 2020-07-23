@@ -20,6 +20,8 @@ namespace ToyRobot.Library.Commands
     using System;
     using Entities;
 
+    /// <summary>Command to place an Actor in a scene.</summary>
+    /// <seealso cref="ToyRobot.Library.Commands.Command{Scene}" />
     public class PlaceCommand : Command<Scene>
     {
         private readonly Bearing bearing;
