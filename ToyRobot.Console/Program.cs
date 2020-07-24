@@ -36,11 +36,13 @@ namespace ToyRobot.Console
             var processor = new Processor();
 
             var fileParser = new FileParser();
-            var commands = fileParser.Parse("CommandFile.txt");
+            var commands = fileParser.GetCommands("CommandFile.txt");
 
             var newScene = processor.ProcessCommands(scene, commands);
 
-            Console.WriteLine($"{newScene.Robot.Bearing.Position.X}, {newScene.Robot.Bearing.Position.Y} - {newScene.Robot.Bearing.Orientation}");
+            Console.WriteLine(newScene.Robot.Bearing == null
+                ? "Robot has not been placed onto the table."
+                : $"{newScene.Robot.Bearing.Position.X}, {newScene.Robot.Bearing.Position.Y} - {newScene.Robot.Bearing.Orientation}");
 
             Console.ReadLine();
         }
