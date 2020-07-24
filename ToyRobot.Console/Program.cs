@@ -16,6 +16,10 @@
  * from DesignStreaks.
  */
 
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using ToyRobot.Library.Commands;
+
 namespace ToyRobot.Console
 {
     using System;
@@ -33,12 +37,12 @@ namespace ToyRobot.Console
                 Environment = new Table()
             };
 
+            var commands = args.Length > 1 
+                ? new FileParser().GetCommands(args[1]) 
+                : new ConsoleParser().GetCommands();
+            
             var processor = new Processor();
-
-            var commandParser = new ConsoleParser();
-            //var commands = commandParser.GetCommands("CommandFile.txt");
-            var commands = commandParser.GetCommands();
-
+            
             var newScene = processor.ProcessCommands(scene, commands);
 
             Console.WriteLine(newScene.Robot.Bearing == null
