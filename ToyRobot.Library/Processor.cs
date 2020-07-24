@@ -33,10 +33,13 @@ namespace ToyRobot.Library
         {
             var newScene = scene.Copy();
 
-            foreach (var status in commands.Select(command => command.Execute(newScene)))
+            if(commands != null)
             {
-                if (status)
-                    newScene = status.Data;
+                foreach (var status in commands.Select(command => command.Execute(newScene)))
+                {
+                    if (status)
+                        newScene = status.Data;
+                }
             }
 
             return newScene;

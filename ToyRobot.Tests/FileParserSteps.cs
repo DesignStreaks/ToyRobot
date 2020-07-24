@@ -35,8 +35,7 @@ namespace ToyRobot.Tests
         [When(@"I validate the command Move command parameters")]
         public void WhenIValidateTheCommandMoveCommandParameters()
         {
-            var target = new FileParser();
-            var obj = new PrivateObject(typeof(FileParser));
+            var obj = new PrivateObject(typeof(Parser));
 
 
             var arguments = this.scenarioContext.Get<string>("arguments");
@@ -54,8 +53,7 @@ namespace ToyRobot.Tests
         [When(@"I validate the command Left command parameters")]
         public void WhenIValidateTheCommandLeftCommandParameters()
         {
-            var target = new FileParser();
-            var obj = new PrivateObject(typeof(FileParser));
+            var obj = new PrivateObject(typeof(Parser));
 
 
             var arguments = this.scenarioContext.Get<string>("arguments");
@@ -73,9 +71,7 @@ namespace ToyRobot.Tests
         [When(@"I validate the command Right command parameters")]
         public void WhenIValidateTheCommandRightCommandParameters()
         {
-            var target = new FileParser();
-            var obj = new PrivateObject(typeof(FileParser));
-
+            var obj = new PrivateObject(typeof(Parser));
 
             var arguments = this.scenarioContext.Get<string>("arguments");
             var command = $"Move {arguments}".Split(' ');
@@ -92,8 +88,7 @@ namespace ToyRobot.Tests
         [When(@"I validate the command Report command parameters")]
         public void WhenIValidateTheCommandReportCommandParameters()
         {
-            var target = new FileParser();
-            var obj = new PrivateObject(typeof(FileParser));
+            var obj = new PrivateObject(typeof(Parser));
 
 
             var arguments = this.scenarioContext.Get<string>("arguments");
@@ -113,8 +108,7 @@ namespace ToyRobot.Tests
         [When(@"I validate the Place command parameters")]
         public void WhenIValidateThePlaceCommandParameters()
         {
-            var target = new FileParser();
-            var obj = new PrivateObject(typeof(FileParser));
+            var obj = new PrivateObject(typeof(Parser));
 
 
             var arguments = this.scenarioContext.Get<string>("arguments");

@@ -26,6 +26,7 @@ namespace ToyRobot.Library.Commands
         Move,
         Left,
         Right,
-        Report
+        Report,
+        Exit
     }
 }

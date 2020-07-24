@@ -35,8 +35,9 @@ namespace ToyRobot.Console
 
             var processor = new Processor();
 
-            var fileParser = new FileParser();
-            var commands = fileParser.GetCommands("CommandFile.txt");
+            var commandParser = new ConsoleParser();
+            //var commands = commandParser.GetCommands("CommandFile.txt");
+            var commands = commandParser.GetCommands();
 
             var newScene = processor.ProcessCommands(scene, commands);
 
