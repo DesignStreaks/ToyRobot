@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyRobot.Library", "ToyRobo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyRobot.CommandParser", "ToyRobot.CommandParser\ToyRobot.CommandParser.csproj", "{DAA3E45E-FFD3-489B-BBE0-BB20790345EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyRobot.ConsoleEx", "ToyRobot.ConsoleEx\ToyRobot.ConsoleEx.csproj", "{6C1CBAB4-DB5D-4496-863D-693619591D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyRobot.Aspects", "ToyRobot.Aspects\ToyRobot.Aspects.csproj", "{EB52F854-8E04-4F5B-A283-59641E109F3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{DAA3E45E-FFD3-489B-BBE0-BB20790345EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAA3E45E-FFD3-489B-BBE0-BB20790345EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAA3E45E-FFD3-489B-BBE0-BB20790345EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1CBAB4-DB5D-4496-863D-693619591D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1CBAB4-DB5D-4496-863D-693619591D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1CBAB4-DB5D-4496-863D-693619591D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1CBAB4-DB5D-4496-863D-693619591D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB52F854-8E04-4F5B-A283-59641E109F3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB52F854-8E04-4F5B-A283-59641E109F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB52F854-8E04-4F5B-A283-59641E109F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB52F854-8E04-4F5B-A283-59641E109F3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

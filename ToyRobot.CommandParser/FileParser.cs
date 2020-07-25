@@ -15,13 +15,13 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot.Library.Parsers
+namespace ToyRobot.CommandParsers
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using Commands;
-    using Entities;
+    using Library.Entities;
+    using Library.Commands;
 
 
 

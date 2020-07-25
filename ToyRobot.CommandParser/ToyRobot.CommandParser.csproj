@@ -40,10 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="FileCommandParser.cs" />
+    <Compile Include="ConsoleParser.cs" />
+    <Compile Include="FileParser.cs" />
+    <Compile Include="IFileParser.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ToyRobot.ConsoleEx\ToyRobot.ConsoleEx.csproj">
+      <Project>{6c1cbab4-db5d-4496-863d-693619591d05}</Project>
+      <Name>ToyRobot.ConsoleEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ToyRobot.Library\ToyRobot.Library.csproj">
+      <Project>{e543a2e8-2d9a-4d32-ad3b-8e906b255515}</Project>
+      <Name>ToyRobot.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

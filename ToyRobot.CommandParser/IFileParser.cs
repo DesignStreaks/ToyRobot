@@ -15,35 +15,18 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-using System.Diagnostics;
-
-namespace System
+namespace ToyRobot.CommandParsers
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Library.Entities;
+    using Library.Commands;
 
-
-    public static class StringExtensions
+    public interface IFileParser
     {
-        [DebuggerHidden]
-        public static T ToEnum<T>(this string value) where T : struct, IConvertible
-        {
-            if (!typeof(T).IsEnum)
-                throw new ArgumentException("T must be an Enumerable Type");
-
-            T a = default(T);
-
-            if (string.IsNullOrEmpty(value))
-                throw new NullReferenceException("Value is null or empty.");
-
-            if (!Enum.TryParse<T>(value, true, out a))
-                throw new ArgumentException($"Enum type '{typeof(T).Name}' does ot contain the requested value `{value}'.");
-
-            return a;
-        }
-
+        /// <summary>Parses the specified file name into executable <see cref="ICommand{T}"/>'s.</summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>Returns a list of commands to be executed.</returns>
+        List<ICommand<Scene>> Parse(string fileName);
     }
 }

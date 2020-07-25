@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
+using ToyRobot.CommandParsers;
 using ToyRobot.Library;
 using ToyRobot.Library.Entities;
-using ToyRobot.Library.Parsers;
 using Assert = Xunit.Assert;
 
 namespace ToyRobot.Tests

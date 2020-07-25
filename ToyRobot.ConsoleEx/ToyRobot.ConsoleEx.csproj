@@ -5,19 +5,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{141426F0-1630-4F72-9AC5-C3F7C96866AB}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{6C1CBAB4-DB5D-4496-863D-693619591D05}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ToyRobot.Console</RootNamespace>
-    <AssemblyName>ToyRobot.Console</AssemblyName>
+    <RootNamespace>ToyRobot.ConsoleEx</RootNamespace>
+    <AssemblyName>ToyRobot.ConsoleEx</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -27,7 +25,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -50,37 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Table.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ConsoleEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Robot.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToyRobot.Aspects\ToyRobot.Aspects.csproj">
       <Project>{eb52f854-8e04-4f5b-a283-59641e109f3f}</Project>
       <Name>ToyRobot.Aspects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ToyRobot.CommandParser\ToyRobot.CommandParser.csproj">
-      <Project>{daa3e45e-ffd3-489b-bbe0-bb20790345ea}</Project>
-      <Name>ToyRobot.CommandParser</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ToyRobot.ConsoleEx\ToyRobot.ConsoleEx.csproj">
-      <Project>{6c1cbab4-db5d-4496-863d-693619591d05}</Project>
-      <Name>ToyRobot.ConsoleEx</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ToyRobot.Library\ToyRobot.Library.csproj">
-      <Project>{e543a2e8-2d9a-4d32-ad3b-8e906b255515}</Project>
-      <Name>ToyRobot.Library</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CommandFile.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

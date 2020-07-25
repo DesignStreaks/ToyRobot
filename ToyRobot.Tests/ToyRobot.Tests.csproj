@@ -105,6 +105,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ToyRobot.CommandParser\ToyRobot.CommandParser.csproj">
+      <Project>{daa3e45e-ffd3-489b-bbe0-bb20790345ea}</Project>
+      <Name>ToyRobot.CommandParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ToyRobot.Console\ToyRobot.Console.csproj">
       <Project>{141426f0-1630-4f72-9ac5-c3f7c96866ab}</Project>
       <Name>ToyRobot.Console</Name>

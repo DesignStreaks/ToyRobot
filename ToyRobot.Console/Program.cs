@@ -16,34 +16,80 @@
  * from DesignStreaks.
  */
 
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using ToyRobot.Library.Commands;
-
 namespace ToyRobot.Console
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
+    using Aspects;
+    using CommandParsers;
     using Library;
     using Library.Entities;
-    using Library.Parsers;
 
     public class Program
     {
+        private static void DrawHeader()
+        {
+            var attributes = typeof(Program).GetTypeInfo().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute));
+            var assemblyTitleAttribute = attributes.SingleOrDefault() as AssemblyDescriptionAttribute;
+
+            var title = assemblyTitleAttribute?.Description ?? string.Empty;
+
+            Console.CursorTop = 0;
+            Console.CursorLeft = (Console.WindowWidth / 2) - (title.Length / 2);
+            ConsoleEx.Write(title, ConsoleColor.Yellow);
+        }
+
+        [ResetConsoleWindowAspect]
+        private static void DrawInstructions()
+        {
+            Console.CursorTop = 3;
+            ConsoleEx.WriteLine(3, "Instructions: ", ConsoleColor.White);
+            ConsoleEx.WriteLine(4, "Enter commands to move a toy robot around a 5x5 unit table.", ConsoleColor.DarkGray);
+            ConsoleEx.Write(4, "Enter '", ConsoleColor.DarkGray);
+            ConsoleEx.Write("Exit", ConsoleColor.Gray);
+            ConsoleEx.WriteLine("' to exit.", ConsoleColor.DarkGray);
+            Console.WriteLine();
+            ConsoleEx.WriteLine(3, "Valid Commands", ConsoleColor.White);
+            ConsoleEx.WriteLine(3, " - Place", ConsoleColor.DarkYellow);
+            ConsoleEx.WriteLine(3, " - Move", ConsoleColor.DarkYellow);
+            ConsoleEx.WriteLine(3, " - Left", ConsoleColor.DarkYellow);
+            ConsoleEx.WriteLine(3, " - Right", ConsoleColor.DarkYellow);
+            ConsoleEx.WriteLine(3, " - Report", ConsoleColor.DarkYellow);
+        }
+
+        private static void InitialiseConsole()
+        {
+            Console.Clear();
+            Console.WindowWidth = 120;
+            Console.WindowHeight = 40;
+            Console.BufferWidth = 120;
+            Console.BufferHeight = 40;
+            ConsoleEx.DrawBox(120, 39, true, ConsoleColor.DarkRed);
+            DrawHeader();
+            DrawInstructions();
+        }
+
         private static void Main(string[] args)
         {
+            InitialiseConsole();
+
             var scene = new Scene()
             {
                 Robot = new Robot(Guid.NewGuid()),
                 Environment = new Table()
             };
 
-            var commands = args.Length > 1 
-                ? new FileParser().GetCommands(args[1]) 
+            var commands = args.Length > 1
+                ? new FileParser().GetCommands(args[1])
                 : new ConsoleParser().GetCommands();
-            
+
             var processor = new Processor();
-            
+
             var newScene = processor.ProcessCommands(scene, commands);
+
+            Console.CursorLeft = 5;
+            Console.CursorTop = 25;
 
             Console.WriteLine(newScene.Robot.Bearing == null
                 ? "Robot has not been placed onto the table."

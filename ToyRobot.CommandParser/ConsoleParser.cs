@@ -15,33 +15,15 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-namespace ToyRobot.Library.Parsers
+namespace ToyRobot.CommandParsers
 {
     using System;
     using System.Collections.Generic;
-    using Commands;
-    using Entities;
+    using Library.Entities;
+    using Library.Commands;
 
     public class ConsoleParser : Parser
     {
-        public ConsoleParser()
-        {
-            ConsoleEx.WriteLine("Toy Robot Simulator", ConsoleColor.Yellow);
-            ConsoleEx.WriteLine("-------------------", ConsoleColor.Yellow);
-            Console.WriteLine();
-            ConsoleEx.WriteLine("Instructions: ", ConsoleColor.Gray);
-            ConsoleEx.WriteLine("Enter commands to move a toy robot around a 5x5 unit table.", ConsoleColor.DarkGray);
-            ConsoleEx.Write("Enter '", ConsoleColor.DarkGray);
-            ConsoleEx.Write("Exit", ConsoleColor.Gray);
-            ConsoleEx.WriteLine("' to exit.", ConsoleColor.DarkGray);
-            Console.WriteLine();
-            ConsoleEx.WriteLine("Valid Commands", ConsoleColor.Gray);
-            ConsoleEx.WriteLine(" - Place", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(" - Move", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(" - Left", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(" - Right", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(" - Report", ConsoleColor.DarkYellow);
-        }
 
         public List<ICommand<Scene>> GetCommands()
         {
@@ -50,17 +32,27 @@ namespace ToyRobot.Library.Parsers
             CommandTypes commandType;
             do
             {
-                commandType = ConsoleEx.ReadEnum<CommandTypes>("Enter Command", 20);
+                Console.CursorTop = 15;
+                Console.CursorLeft = 3;
+                commandType = ConsoleEx.ReadEnum<CommandTypes>("Enter Command", padding: 20);
 
                 var command = commandType.ToString();
 
                 if (commandType == CommandTypes.Place)
                 {
-                    var arguments = ConsoleEx.ReadInput("Enter Place Parameters (x, y, orientation):", "");
+                    Console.CursorLeft = 3;
+                    var arguments = ConsoleEx.ReadInput("Enter Place Parameters (x, y, orientation):");
                     command += $" {arguments}";
                 }
 
                 this.ParseLine(command, commands);
+
+                ConsoleEx.ClearLine(15, 3, Console.WindowWidth - 2);
+                ConsoleEx.ClearLine(16, 3, Console.WindowWidth - 2);
+
+                Console.CursorTop = Console.WindowHeight - 3;
+                ConsoleEx.Write(3, "Command Count: ", ConsoleColor.Gray);
+                ConsoleEx.Write(20, commands.Count.ToString(), ConsoleColor.DarkGray);
             }
             while (commandType != CommandTypes.Exit);
 
