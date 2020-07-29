@@ -13,8 +13,6 @@
 // * is strictly forbidden unless prior written permission is obtained
 // * from DesignStreaks.
 
-using System.Xml.Schema;
-
 namespace System
 {
     using ToyRobot.Aspects;
@@ -32,32 +30,41 @@ namespace System
         /// <param name="clearContents">if set to <c>true</c> the inside of the box is cleared.; otherwise only the box is rendered.</param>
         /// <param name="foreColor">The foreground colour to write.</param>
         /// <param name="backgroundColor">The background colour to write.</param>
-        [ResetConsoleWindowAspect]
         public static void DrawBox(int x, int y, int width, int height, bool clearContents = false, ConsoleColor foreColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
-            width = Math.Min(width, Console.WindowWidth);
-            height = Math.Min(height, Console.WindowHeight);
+            var resetConsoleWindowAspect = new ResetConsoleWindowAspect();
+            resetConsoleWindowAspect.OnEntry();
 
-            Console.CursorLeft = x;
-            Console.CursorTop = y;
+            try
+            {
+                width = Math.Min(width, Console.WindowWidth);
+                height = Math.Min(height, Console.WindowHeight);
 
-            ConsoleEx.Write("┌", foreColor, backgroundColor);
-            ConsoleEx.Write(new string('─', width - 2), foreColor, backgroundColor);
-            ConsoleEx.Write("┐", foreColor, backgroundColor);
-            Console.CursorTop++;
+                Console.CursorLeft = x;
+                Console.CursorTop = y;
 
-            if (clearContents)
-                for (int rowIndex = 1; rowIndex < height; rowIndex++)
-                {
-                    Console.CursorLeft = x;
-                    ConsoleEx.Write($"│{new string(' ', width - 2)}│", foreColor, backgroundColor);
-                    Console.CursorTop = y + rowIndex;
-                }
+                ConsoleEx.Write("┌", foreColor, backgroundColor);
+                ConsoleEx.Write(new string('─', width - 2), foreColor, backgroundColor);
+                ConsoleEx.Write("┐", foreColor, backgroundColor);
+                Console.CursorTop++;
 
-            Console.CursorLeft = x;
-            ConsoleEx.Write("└", foreColor, backgroundColor);
-            ConsoleEx.Write(new string('─', width - 2), foreColor, backgroundColor);
-            ConsoleEx.Write("┘", foreColor, backgroundColor);
+                if (clearContents)
+                    for (int rowIndex = 1; rowIndex < height; rowIndex++)
+                    {
+                        Console.CursorLeft = x;
+                        ConsoleEx.Write($"│{new string(' ', width - 2)}│", foreColor, backgroundColor);
+                        Console.CursorTop = y + rowIndex;
+                    }
+
+                Console.CursorLeft = x;
+                ConsoleEx.Write("└", foreColor, backgroundColor);
+                ConsoleEx.Write(new string('─', width - 2), foreColor, backgroundColor);
+                ConsoleEx.Write("┘", foreColor, backgroundColor);
+            }
+            finally
+            {
+                resetConsoleWindowAspect.OnExit();
+            }
         }
 
         /// <summary>Draws a box to the console at the top left corner.</summary>
@@ -80,37 +87,46 @@ namespace System
         /// <param name="placeHolder">The default value for the input.</param>
         /// <returns>T.</returns>
         /// <exception cref="ArgumentException"><typeparamref name="T"/> must be an Enumerable Type</exception>
-        [ResetCursorColourAspect]
         public static T ReadEnum<T>(string message, ConsoleColor foreColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black, int padding = 0, string placeHolder = "") where T : struct, IConvertible
         {
-            if (!typeof(T).IsEnum)
-                throw new ArgumentException("T must be an Enumerable Type");
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
 
-            string origPlaceHolder = placeHolder;
-
-            bool validValue = false;
-            T value;
-
-            do
+            try
             {
-                var input = ReadInput(
-                            message,
-                            foreColor,
-                            backgroundColor,
-                            padding,
-                            placeHolder);
+                if (!typeof(T).IsEnum)
+                    throw new ArgumentException("T must be an Enumerable Type");
 
-                if (input == placeHolder)
-                    input = origPlaceHolder;
+                string origPlaceHolder = placeHolder;
 
-                validValue = Enum.TryParse(input, true, out value);
-                if (!validValue)
+                bool validValue = false;
+                T value;
+
+                do
                 {
-                    placeHolder = $"{origPlaceHolder} - {input} is invalid";
-                }
-            } while (!validValue);
+                    var input = ReadInput(
+                                message,
+                                foreColor,
+                                backgroundColor,
+                                padding,
+                                placeHolder);
 
-            return value;
+                    if (input == placeHolder)
+                        input = origPlaceHolder;
+
+                    validValue = Enum.TryParse(input, true, out value);
+                    if (!validValue)
+                    {
+                        placeHolder = $"{origPlaceHolder} - {input} is invalid";
+                    }
+                } while (!validValue);
+
+                return value;
+            }
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
+            }
         }
 
         /// <summary>Writes the specified string value to the console then reads a line of characters from the console.</summary>
@@ -120,31 +136,40 @@ namespace System
         /// <param name="padding">Used to set the input position.</param>
         /// <param name="placeHolder">The default value for the input.</param>
         /// <returns>System.String.</returns>
-        [ResetCursorColourAspect]
         public static string ReadInput(string message, ConsoleColor foreColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black, int padding = 0, string placeHolder = "")
         {
-            lock (_MessageLock)
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
+
+            try
             {
-                Console.ForegroundColor = foreColor;
-                Console.BackgroundColor = backgroundColor;
-
-                Console.Write($"{message.PadRight(padding)}");
-
-                if (placeHolder != string.Empty)
+                lock (_MessageLock)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.Write(placeHolder);
-                    Console.CursorLeft = Console.CursorLeft - placeHolder.Length;
+                    Console.ForegroundColor = foreColor;
+                    Console.BackgroundColor = backgroundColor;
+
+                    Console.Write($"{message.PadRight(padding)}");
+
+                    if (placeHolder != string.Empty)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(placeHolder);
+                        Console.CursorLeft = Console.CursorLeft - placeHolder.Length;
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Gray;
                 }
+                string input = Console.ReadLine();
 
-                Console.ForegroundColor = ConsoleColor.Gray;
+                if (input == string.Empty)
+                    input = placeHolder;
+
+                return input;
             }
-            string input = Console.ReadLine();
-
-            if (input == string.Empty)
-                input = placeHolder;
-
-            return input;
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
+            }
         }
 
         /// <summary>Reads the int.</summary>
@@ -154,48 +179,66 @@ namespace System
         /// <param name="padding">Used to set the input position.</param>
         /// <param name="placeHolder">The default value for the input.</param>
         /// <returns>System.Int32.</returns>
-        [ResetCursorColourAspect]
         public static int ReadInt(string message, ConsoleColor foreColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black, int padding = 0, string placeHolder = "")
         {
-            string origPlaceHolder = placeHolder;
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
 
-            bool validValue = false;
-            int value;
-
-            do
+            try
             {
-                var input = ReadInput(
-                            message,
-                            foreColor,
-                            backgroundColor,
-                            padding,
-                            placeHolder);
+                string origPlaceHolder = placeHolder;
 
-                if (input == placeHolder)
-                    input = origPlaceHolder;
+                bool validValue = false;
+                int value;
 
-                validValue = int.TryParse(input, out value);
-                if (!validValue)
+                do
                 {
-                    placeHolder = $"{origPlaceHolder} - {input} is invalid";
-                }
-            } while (!validValue);
+                    var input = ReadInput(
+                                message,
+                                foreColor,
+                                backgroundColor,
+                                padding,
+                                placeHolder);
 
-            return value;
+                    if (input == placeHolder)
+                        input = origPlaceHolder;
+
+                    validValue = int.TryParse(input, out value);
+                    if (!validValue)
+                    {
+                        placeHolder = $"{origPlaceHolder} - {input} is invalid";
+                    }
+                } while (!validValue);
+
+                return value;
+            }
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
+            }
         }
 
         /// <summary>Writes the specified string value to the console.</summary>
         /// <param name="message">The message to write.</param>
         /// <param name="foreColor">The foreground colour to write.</param>
         /// <param name="backgroundColor">The background colour to write.</param>
-        [ResetCursorColourAspect]
         public static void Write(string message, ConsoleColor foreColor, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
-            lock (_MessageLock)
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
+
+            try
             {
-                Console.ForegroundColor = foreColor;
-                Console.BackgroundColor = backgroundColor;
-                Console.Write(message);
+                lock (_MessageLock)
+                {
+                    Console.ForegroundColor = foreColor;
+                    Console.BackgroundColor = backgroundColor;
+                    Console.Write(message);
+                }
+            }
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
             }
         }
 
@@ -204,15 +247,24 @@ namespace System
         /// <param name="message">The message to write.</param>
         /// <param name="foreColor">The foreground colour to write.</param>
         /// <param name="backgroundColor">The background colour to write.</param>
-        [ResetCursorColourAspect]
         public static void Write(int left, string message, ConsoleColor foreColor, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
-            lock (_MessageLock)
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
+
+            try
             {
-                Console.CursorLeft = left;
-                Console.ForegroundColor = foreColor;
-                Console.BackgroundColor = backgroundColor;
-                Console.Write(message);
+                lock (_MessageLock)
+                {
+                    Console.CursorLeft = left;
+                    Console.ForegroundColor = foreColor;
+                    Console.BackgroundColor = backgroundColor;
+                    Console.Write(message);
+                }
+            }
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
             }
         }
 
@@ -220,10 +272,19 @@ namespace System
         /// <param name="message">The message to write.</param>
         /// <param name="foreColor">The foreground colour to write.</param>
         /// <param name="backgroundColor">The background colour to write.</param>
-        [ResetCursorColourAspect]
         public static void WriteLine(string message, ConsoleColor foreColor, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
-            Write(message + "\n", foreColor, backgroundColor);
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
+
+            try
+            {
+                Write(message + "\n", foreColor, backgroundColor);
+            }
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
+            }
         }
 
         /// <summary>Writes the specified string value, followed by the current line terminator, to the console.</summary>
@@ -231,11 +292,20 @@ namespace System
         /// <param name="message">The message to write.</param>
         /// <param name="foreColor">The foreground colour to write.</param>
         /// <param name="backgroundColor">The background colour to write.</param>
-        [ResetCursorColourAspect]
         public static void WriteLine(int left, string message, ConsoleColor foreColor, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
-            Console.CursorLeft = left;
-            Write(message + "\n", foreColor, backgroundColor);
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
+
+            try
+            {
+                Console.CursorLeft = left;
+                Write(message + "\n", foreColor, backgroundColor);
+            }
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
+            }
         }
 
 
@@ -247,43 +317,88 @@ namespace System
         /// <param name="foreColor">The foreground colour to write.</param>
         /// <param name="backgroundColor">The background colour to write.</param>
         /// <param name="underlineCharacter">The character used to write under the message.</param>
-        [ResetCursorColourAspect]
         public static void WriteUnderLine(string message, ConsoleColor foreColor, ConsoleColor backgroundColor = ConsoleColor.Black, char underlineCharacter = '-')
         {
-            WriteLine(message, foreColor, backgroundColor);
-            WriteLine(new string(underlineCharacter, message.Length), foreColor, backgroundColor);
+            var resetConsoleColourAspect = new ResetCursorColourAspect();
+            resetConsoleColourAspect.OnEntry();
+
+            try
+            {
+                WriteLine(message, foreColor, backgroundColor);
+                WriteLine(new string(underlineCharacter, message.Length), foreColor, backgroundColor);
+            }
+            finally
+            {
+                resetConsoleColourAspect.OnExit();
+            }
         }
 
-        [ResetConsoleWindowAspect]
         public static void ClearLine()
         {
-            Console.Write(new string(' ', Console.WindowWidth));
+            var resetConsoleWindowAspect = new ResetConsoleWindowAspect();
+            resetConsoleWindowAspect.OnEntry();
+
+            try
+            {
+                Console.Write(new string(' ', Console.WindowWidth));
+            }
+            finally
+            {
+                resetConsoleWindowAspect.OnExit();
+            }
         }
 
-        [ResetConsoleWindowAspect]
         public static void ClearLine(int start, int length)
         {
-            Console.CursorLeft = start;
-            if ((start + length) > Console.WindowWidth)
-                length = Console.WindowWidth - start - 1;
-            Console.Write(new string(' ', length));
+            var resetConsoleWindowAspect = new ResetConsoleWindowAspect();
+            resetConsoleWindowAspect.OnEntry();
+
+            try
+            {
+                Console.CursorLeft = start;
+                if ((start + length) > Console.WindowWidth)
+                    length = Console.WindowWidth - start - 1;
+                Console.Write(new string(' ', length));
+            }
+            finally
+            {
+                resetConsoleWindowAspect.OnExit();
+            }
         }
 
 
-        [ResetConsoleWindowAspect]
         public static void ClearLine(int lineNumber)
         {
-            Console.SetCursorPosition(0, lineNumber);
-            Console.Write(new string(' ', Console.WindowWidth));
+            var resetConsoleWindowAspect = new ResetConsoleWindowAspect();
+            resetConsoleWindowAspect.OnEntry();
+
+            try
+            {
+                Console.SetCursorPosition(0, lineNumber);
+                Console.Write(new string(' ', Console.WindowWidth));
+            }
+            finally
+            {
+                resetConsoleWindowAspect.OnExit();
+            }
         }
 
-        [ResetConsoleWindowAspect]
         public static void ClearLine(int lineNumber, int start, int length)
         {
-            Console.SetCursorPosition(start, lineNumber);
-            if ((start + length) > Console.WindowWidth)
-                length = Console.WindowWidth - start - 1;
-            Console.Write(new string(' ', length));
+            var resetConsoleWindowAspect = new ResetConsoleWindowAspect();
+            resetConsoleWindowAspect.OnEntry();
+
+            try
+            {
+                Console.SetCursorPosition(start, lineNumber);
+                if ((start + length) > Console.WindowWidth)
+                    length = Console.WindowWidth - start - 1;
+                Console.Write(new string(' ', length));
+            }
+            finally
+            {
+                resetConsoleWindowAspect.OnExit();
+            }
         }
     }
 }

@@ -19,7 +19,6 @@ namespace ToyRobot.Aspects
 {
     using System;
     using System.Diagnostics;
-    using PostSharp.Aspects;
 
     /// <summary>Aspect used to reset the Console Window &amp; Buffer.</summary>
     /// <remarks>
@@ -30,10 +29,11 @@ namespace ToyRobot.Aspects
     ///     <item><description>Window Height</description></item>
     ///     <item><description>Window Width</description></item>
     ///   </list>
+    ///   <note type="Information">This class was originally written as a PostSharp aspect. Due to licensing restrictions, PostSharp has been
+    ///   removed so methods in this class are to be called manually (as opposed to being defined as a method attribute and weaved in by PostSharp)</note>
     /// </remarks>
-    /// <seealso cref="PostSharp.Aspects.OnMethodBoundaryAspect" />
     [Serializable]
-    public class ResetConsoleWindowAspect : OnMethodBoundaryAspect
+    public class ResetConsoleWindowAspect
     {
         private int bufferHeight;
         private int bufferWidth;
@@ -41,20 +41,14 @@ namespace ToyRobot.Aspects
         private int windowWidth;
 
         /// <summary>Method executed <b>before</b> the body of methods to which this aspect is applied.</summary>
-        /// <param name="args">
-        ///   Event arguments specifying which method is being executed, which are its arguments, and how should the execution continue after
-        ///   the execution of <see cref="M:PostSharp.Aspects.IOnMethodBoundaryAspect.OnEntry(PostSharp.Aspects.MethodExecutionArgs)" />.
-        /// </param>
         [DebuggerHidden]
-        public override void OnEntry(MethodExecutionArgs args)
+        public void OnEntry()
         {
             this.bufferHeight = Console.BufferHeight;
             this.bufferWidth = Console.BufferWidth;
 
             this.windowHeight = Console.WindowHeight;
             this.windowWidth = Console.WindowWidth;
-
-            base.OnEntry(args);
         }
 
         /// <summary>
@@ -63,16 +57,13 @@ namespace ToyRobot.Aspects
         /// </summary>
         /// <param name="args">Event arguments specifying which method is being executed and which are its arguments.</param>
         [DebuggerHidden]
-        public override void OnExit(MethodExecutionArgs args)
+        public void OnExit()
         {
             Console.BufferHeight = this.bufferHeight;
             Console.BufferWidth = this.bufferWidth;
 
             Console.WindowHeight = this.windowHeight;
             Console.WindowWidth = this.windowWidth;
-
-            base.OnExit(args);
         }
     }
-
 }

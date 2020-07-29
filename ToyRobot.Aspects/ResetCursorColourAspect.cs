@@ -19,7 +19,6 @@ namespace ToyRobot.Aspects
 {
     using System;
     using System.Diagnostics;
-    using PostSharp.Aspects;
 
     /// <summary>Aspect used to reset the Console cursor colour properties.</summary>
     /// <remarks>
@@ -28,40 +27,32 @@ namespace ToyRobot.Aspects
     ///     <item><description>Cursor Foreground Colour</description></item>
     ///     <item><description>Cursor Background Colour</description></item>
     ///   </list>
+    ///   <note type="Information">This class was originally written as a PostSharp aspect. Due to licensing restrictions, PostSharp has been
+    ///   removed so methods in this class are to be called manually (as opposed to being defined as a method attribute and weaved in by PostSharp)</note>
     /// </remarks>
-    /// <seealso cref="PostSharp.Aspects.OnMethodBoundaryAspect" />
     [Serializable]
-    public class ResetCursorColourAspect : OnMethodBoundaryAspect
+    public class ResetCursorColourAspect
     {
         private ConsoleColor backgroundColour;
         private ConsoleColor foregroundColour;
 
         /// <summary>Method executed <b>before</b> the body of methods to which this aspect is applied.</summary>
-        /// <param name="args">
-        ///   Event arguments specifying which method is being executed, which are its arguments, and how should the execution continue after
-        ///   the execution of <see cref="M:PostSharp.Aspects.IOnMethodBoundaryAspect.OnEntry(PostSharp.Aspects.MethodExecutionArgs)" />.
-        /// </param>
         [DebuggerHidden]
-        public override void OnEntry(MethodExecutionArgs args)
+        public void OnEntry()
         {
             this.foregroundColour = Console.ForegroundColor;
             this.backgroundColour = Console.BackgroundColor;
-
-            base.OnEntry(args);
         }
 
         /// <summary>
         ///   Method executed <b>after</b> the body of methods to which this aspect is applied, even when the method exists with an exception
         ///   (this method is invoked from the <c>finally</c> block).
         /// </summary>
-        /// <param name="args">Event arguments specifying which method is being executed and which are its arguments.</param>
         [DebuggerHidden]
-        public override void OnExit(MethodExecutionArgs args)
+        public void OnExit()
         {
             Console.ForegroundColor = this.foregroundColour;
             Console.BackgroundColor = this.backgroundColour;
-
-            base.OnExit(args);
         }
     }
 }
