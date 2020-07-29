@@ -40,22 +40,31 @@ namespace ToyRobot.Console
             ConsoleEx.Write(title, ConsoleColor.Yellow);
         }
 
-        [ResetConsoleWindowAspect]
         private static void DrawInstructions()
         {
-            Console.CursorTop = 3;
-            ConsoleEx.WriteLine(3, "Instructions: ", ConsoleColor.White);
-            ConsoleEx.WriteLine(4, "Enter commands to move a toy robot around a 5x5 unit table.", ConsoleColor.DarkGray);
-            ConsoleEx.Write(4, "Enter '", ConsoleColor.DarkGray);
-            ConsoleEx.Write("Exit", ConsoleColor.Gray);
-            ConsoleEx.WriteLine("' to exit.", ConsoleColor.DarkGray);
-            Console.WriteLine();
-            ConsoleEx.WriteLine(3, "Valid Commands", ConsoleColor.White);
-            ConsoleEx.WriteLine(3, " - Place", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(3, " - Move", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(3, " - Left", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(3, " - Right", ConsoleColor.DarkYellow);
-            ConsoleEx.WriteLine(3, " - Report", ConsoleColor.DarkYellow);
+            var resetConsoleWindowAspect = new ResetConsoleWindowAspect();
+            resetConsoleWindowAspect.OnEntry();
+
+            try
+            {
+                Console.CursorTop = 3;
+                ConsoleEx.WriteLine(3, "Instructions: ", ConsoleColor.White);
+                ConsoleEx.WriteLine(4, "Enter commands to move a toy robot around a 5x5 unit table.", ConsoleColor.DarkGray);
+                ConsoleEx.Write(4, "Enter '", ConsoleColor.DarkGray);
+                ConsoleEx.Write("Exit", ConsoleColor.Gray);
+                ConsoleEx.WriteLine("' to exit.", ConsoleColor.DarkGray);
+                Console.WriteLine();
+                ConsoleEx.WriteLine(3, "Valid Commands", ConsoleColor.White);
+                ConsoleEx.WriteLine(3, " - Place", ConsoleColor.DarkYellow);
+                ConsoleEx.WriteLine(3, " - Move", ConsoleColor.DarkYellow);
+                ConsoleEx.WriteLine(3, " - Left", ConsoleColor.DarkYellow);
+                ConsoleEx.WriteLine(3, " - Right", ConsoleColor.DarkYellow);
+                ConsoleEx.WriteLine(3, " - Report", ConsoleColor.DarkYellow);
+            }
+            finally
+            {
+                resetConsoleWindowAspect.OnExit();
+            }
         }
 
         private static void InitialiseConsole()
